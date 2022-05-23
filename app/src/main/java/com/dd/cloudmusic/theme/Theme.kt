@@ -135,7 +135,7 @@ enum class ThemeType {
     Theme2,
     Theme3,
     Theme4,
-    Theme5
+    DarkColorPalette
 }
 @Composable
 fun ComposeAppTheme(

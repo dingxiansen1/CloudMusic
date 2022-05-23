@@ -6,7 +6,7 @@ val Transparent = Color(0x00000000)
 
 val themeColors = arrayOf(
     Color(0xFFD87831),
-    Color(0xFFB0EB6E),
+    Color(0xFF5BA509),
     Color(0xFFFF0000),
     Color(0xFFF6CA23),
     Color(0xFF0000FF)
