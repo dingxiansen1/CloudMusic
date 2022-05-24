@@ -1,5 +1,6 @@
 package com.dd.cloudmusic.splash
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.dd.cloudmusic.theme.ComposeAppTheme
 import com.dd.cloudmusic.theme.Themem
+import com.dd.cloudmusic.theme.grey1
+import com.dd.cloudmusic.theme.white
 import kotlinx.coroutines.delay
 
 
@@ -44,11 +47,12 @@ fun SplashPage(onNextPage: () -> Unit) {
                 contentDescription = "启动页"
             )
             ExtendedFloatingActionButton(
-                modifier = Modifier.padding(20.dp).align(Alignment.BottomEnd),
+                modifier = Modifier.padding(20.dp).align(Alignment.TopEnd),
+                backgroundColor = grey1,
                 onClick = {
                     onNextPage.invoke()
                 },
-                text = { Text("跳过  $time") }
+                text = { Text("跳过  $time",color = white) }
             )
         }
 
