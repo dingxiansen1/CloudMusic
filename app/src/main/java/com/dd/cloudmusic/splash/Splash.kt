@@ -1,17 +1,15 @@
 package com.dd.cloudmusic.splash
 
-import androidx.compose.foundation.background
+import android.view.Window
+import android.view.WindowManager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExtendedFloatingActionButton
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.dd.cloudmusic.theme.ComposeAppTheme
@@ -22,7 +20,7 @@ import kotlinx.coroutines.delay
 
 
 @Composable
-fun SplashPage(onNextPage: () -> Unit) {
+fun SplashPage(window: Window,onNextPage: () -> Unit) {
     ComposeAppTheme(themeType = Themem.themeTypeState.value) {
         var time by remember { mutableStateOf(3) }
         LaunchedEffect(Unit) {
