@@ -1,10 +1,11 @@
-package com.dd.composeapp.ui.theme
+package com.dd.cloudmusic.theme
 
 import androidx.compose.ui.graphics.Color
 
 val Transparent = Color(0x00000000)
 
 val themeColors = arrayOf(
+    Color(0xFFFFFFFF),
     Color(0xFFD87831),
     Color(0xFF5BA509),
     Color(0xFFFF0000),

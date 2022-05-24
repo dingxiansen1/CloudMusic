@@ -29,6 +29,7 @@ object Themem {
             2 -> ThemeType.Theme2
             3 -> ThemeType.Theme3
             4 -> ThemeType.Theme4
+            5-> ThemeType.Theme5
             else -> ThemeType.Default
         }
     }
@@ -39,6 +40,7 @@ object Themem {
             2 -> ThemeType.Theme2
             3 -> ThemeType.Theme3
             4 -> ThemeType.Theme4
+            5 -> ThemeType.Theme5
             else -> ThemeType.Default
         }
     }

@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import com.dd.base.utils.SpHelper
 import com.dd.cloudmusic.theme.ComposeAppTheme
 import com.dd.cloudmusic.theme.THEME_COLOR_KEY
+import com.dd.cloudmusic.theme.themeColors
 import com.dd.cloudmusic.widget.*
-import com.dd.composeapp.ui.theme.themeColors
 
 @Composable
 fun SampleAlertDialog(
