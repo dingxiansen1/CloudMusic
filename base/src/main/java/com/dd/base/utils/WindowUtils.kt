@@ -5,7 +5,9 @@ import android.view.Window
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-
+/**
+ * 设置Window导航栏的工具类
+ * */
 object WindowUtils {
 
     var window :Window?=null
@@ -13,8 +15,9 @@ object WindowUtils {
     fun Init(activity: Activity){
         window= activity.window
     }
-
-    // 全屏隐藏系统栏，如：你看视频或者玩游戏的时候，就可以通过此种方式，体验是一样的
+    /**
+     * 全屏隐藏系统栏，如：你看视频或者玩游戏的时候，就可以通过此种方式，体验是一样的
+     * */
     fun hideSystemUI() {
         window?.let {
             WindowCompat.setDecorFitsSystemWindows(it, false)
@@ -26,8 +29,9 @@ object WindowUtils {
             }
         }
     }
-
-    // 从全屏隐藏状态下，恢复系统栏的显示
+    /**
+     * 从全屏隐藏状态下，恢复系统栏的显示
+     * */
     fun showSystemUI() {
         window?.let {
             WindowCompat.setDecorFitsSystemWindows(it, true)

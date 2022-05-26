@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.dd.base.utils.WindowUtils
-import com.dd.cloudmusic.main.MainPage
+import com.dd.cloudmusic.navigator.NavController
 import com.dd.cloudmusic.splash.SplashPage
 import com.dd.cloudmusic.theme.ComposeAppTheme
 import com.dd.cloudmusic.theme.Themem
@@ -26,10 +26,10 @@ class MainActivity : ComponentActivity() {
                 var isSplash by remember { mutableStateOf(true) }
                 if (isSplash) {
                     WindowUtils.hideSystemUI()
-                    SplashPage(window) { isSplash = false }
+                    SplashPage() { isSplash = false }
                 } else {
                     WindowUtils.showSystemUI()
-                    MainPage()
+                    NavController()
                 }
             }
         }

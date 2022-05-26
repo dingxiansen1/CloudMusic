@@ -20,7 +20,7 @@ import kotlinx.coroutines.delay
 
 
 @Composable
-fun SplashPage(window: Window,onNextPage: () -> Unit) {
+fun SplashPage(onNextPage: () -> Unit) {
     ComposeAppTheme(themeType = Themem.themeTypeState.value) {
         var time by remember { mutableStateOf(3) }
         LaunchedEffect(Unit) {
