@@ -13,6 +13,7 @@ import com.dd.cloudmusic.find.FindPage
 import com.dd.cloudmusic.home.HomePage
 import com.dd.cloudmusic.mine.MinePage
 import com.dd.cloudmusic.theme.ComposeAppTheme
+import com.dd.cloudmusic.theme.AppTheme
 import com.dd.cloudmusic.theme.Themem
 
 @Composable
@@ -24,7 +25,7 @@ fun MainPage(navCtrl: NavHostController) {
         Scaffold(
             scaffoldState = scaffoldState,
             bottomBar = {
-                BottomNavigation(Modifier.background(ComposeAppTheme.colors.background)) {
+                BottomNavigation(Modifier.background(AppTheme.colors.background)) {
                     BottomNavigation {
                         items.forEachIndexed { index, item ->
                             BottomNavigationItem(

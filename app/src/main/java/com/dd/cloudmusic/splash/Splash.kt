@@ -1,7 +1,5 @@
 package com.dd.cloudmusic.splash
 
-import android.view.Window
-import android.view.WindowManager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding

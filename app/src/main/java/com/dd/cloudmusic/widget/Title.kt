@@ -9,7 +9,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import com.dd.cloudmusic.theme.ComposeAppTheme
+import com.dd.cloudmusic.theme.AppTheme
 import com.dd.composeapp.ui.theme.*
 
 @Composable
@@ -23,7 +23,7 @@ fun LargeTitle(
         title = title,
         modifier = modifier,
         fontSize = H3,
-        color = color ?: ComposeAppTheme.colors.textPrimary,
+        color = color ?: AppTheme.colors.textPrimary,
         fontWeight = FontWeight.Bold,
         isLoading = isLoading
     )
@@ -35,7 +35,7 @@ fun MainTitle(
     modifier: Modifier = Modifier,
     maxLine: Int = 1,
     textAlign: TextAlign = TextAlign.Start,
-    color: Color = ComposeAppTheme.colors.textPrimary,
+    color: Color = AppTheme.colors.textPrimary,
     isLoading: Boolean = false
 ) {
     Title(
@@ -54,7 +54,7 @@ fun MainTitle(
 fun MediumTitle(
     title: String,
     modifier: Modifier = Modifier,
-    color: Color = ComposeAppTheme.colors.textPrimary,
+    color: Color = AppTheme.colors.textPrimary,
     textAlign: TextAlign = TextAlign.Start,
     isLoading: Boolean = false
 ) {
@@ -72,7 +72,7 @@ fun MediumTitle(
 fun TextContent(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = ComposeAppTheme.colors.textSecondary,
+    color: Color = AppTheme.colors.textSecondary,
     maxLines: Int = 99,
     textAlign: TextAlign = TextAlign.Start,
     canCopy: Boolean = false,
@@ -108,7 +108,7 @@ fun TextContent(
 fun MiniTitle(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = ComposeAppTheme.colors.textSecondary,
+    color: Color = AppTheme.colors.textSecondary,
     maxLines: Int = 1,
     textAlign: TextAlign = TextAlign.Start,
     isLoading: Boolean = false
@@ -129,7 +129,7 @@ fun Title(
     title: String,
     modifier: Modifier = Modifier,
     fontSize: TextUnit,
-    color: Color = ComposeAppTheme.colors.textSecondary,
+    color: Color = AppTheme.colors.textSecondary,
     fontWeight: FontWeight = FontWeight.Normal,
     maxLine: Int = 1,
     textAlign: TextAlign = TextAlign.Start,

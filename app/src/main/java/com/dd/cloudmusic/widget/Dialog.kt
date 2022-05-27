@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.dd.base.utils.SpHelper
-import com.dd.cloudmusic.theme.ComposeAppTheme
+import com.dd.cloudmusic.theme.AppTheme
 import com.dd.cloudmusic.theme.THEME_COLOR_KEY
 import com.dd.cloudmusic.theme.themeColors
 import com.dd.cloudmusic.widget.*
@@ -47,7 +47,7 @@ fun SampleAlertDialog(
                 onConfirmClick.invoke()
                 onDismiss.invoke()
             }) {
-                TextContent(text = confirmText, color = ComposeAppTheme.colors.textPrimary)
+                TextContent(text = confirmText, color = AppTheme.colors.textPrimary)
             }
         },
         dismissButton = {
@@ -87,7 +87,7 @@ fun PaletteSelectorDialog(
                         modifier = Modifier
                             .padding(5.dp)
                             .wrapContentSize()
-                            .background(ComposeAppTheme.colors.mainColor, RoundedCornerShape(24.dp))
+                            .background(AppTheme.colors.mainColor, RoundedCornerShape(24.dp))
                             .clickable {
                                 SpHelper.put(THEME_COLOR_KEY, index)
                                 onSelectItem.invoke(index)
@@ -106,7 +106,7 @@ fun PaletteSelectorDialog(
                             Icon(
                                 imageVector = Icons.Default.Done,
                                 contentDescription = "done",
-                                tint = ComposeAppTheme.colors.mainColor,
+                                tint = AppTheme.colors.mainColor,
                                 modifier = Modifier.align(Alignment.Center)
                             )
                         }
@@ -119,13 +119,13 @@ fun PaletteSelectorDialog(
             TextButton(onClick = {
                 onDismiss.invoke()
             }) {
-                TextContent(text = confirmText, color = ComposeAppTheme.colors.textPrimary)
+                TextContent(text = confirmText, color = AppTheme.colors.textPrimary)
             }
         },
         modifier = Modifier
             //.padding(horizontal = 30.dp)
             .defaultMinSize(minWidth = 300.dp)
             .wrapContentSize()
-            .background(ComposeAppTheme.colors.mainColor)
+            .background(AppTheme.colors.mainColor)
     )
 }

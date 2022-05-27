@@ -58,7 +58,7 @@ var LocalHamColors = compositionLocalOf {
 }
 
 @Stable
-object ComposeAppTheme {
+object AppTheme {
     val colors: HamColors
         @Composable
         get() = LocalHamColors.current
