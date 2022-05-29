@@ -1,22 +1,27 @@
 package com.dd.cloudmusic.main.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
+import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.dd.base.BaseApp
 import com.dd.base.ext.showToast
 import com.dd.base.widgets.RefreshList
 import com.dd.cloudmusic.R
+import com.dd.cloudmusic.bean.HomeIcon
 import com.dd.cloudmusic.main.drawer.MainDrawerPage
 import com.dd.cloudmusic.theme.AppTheme
 import com.dd.cloudmusic.widget.Banner
@@ -35,6 +40,7 @@ fun HomePage(
     val viewModel: HomeViewModel = hiltViewModel()
     val viewStates = viewModel.viewStates
     val banners = viewStates.banner
+    val homeIcon = viewStates.homeIcon
     Column(
         modifier = Modifier.background(AppTheme.colors.background)
     ) {
@@ -56,5 +62,24 @@ fun HomePage(
                 showToast("暂未开发$title")
             }
         }
+        if(homeIcon.isNotEmpty()){
+            LazyRow {
+                items(homeIcon.size){ index->
+                    HomeIconPage(homeIcon[index])
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun HomeIconPage(data:HomeIcon) {
+    Column(
+        Modifier
+            .height(80.dp)
+            .width(80.dp)) {
+        AsyncImage(model = data.iconUrl, contentDescription = data.name,modifier = Modifier.size(56.dp).align(
+            Alignment.CenterHorizontally))
+        Text(text = data.name,textAlign = TextAlign.Center,fontSize = 16.sp)
     }
 }

@@ -2,8 +2,8 @@ package com.dd.base.paging
 
 data class BasicBean<T>(
     var data: T?,
-    var errorCode: Int,
-    var errorMsg: String
+    var code: Int,
+    var message: String
 )
 /*
 * 需要分页使用这个

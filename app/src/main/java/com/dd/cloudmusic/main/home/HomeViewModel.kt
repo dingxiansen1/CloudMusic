@@ -6,12 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.dd.base.BaseViewModel
 import com.dd.cloudmusic.bean.Banner
+import com.dd.cloudmusic.bean.HomeIcon
 import com.dd.cloudmusic.net.HttpService
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,41 +19,46 @@ class HomeViewModel @Inject constructor(
     private var service: HttpService,
 ) : BaseViewModel() {
 
+    init {
+        getData()
+    }
+
     var viewStates by mutableStateOf(HomeViewState())
         private set
 
-    init {
-        getBanner()
+    /**
+     *  轮播
+     * */
+    private val bannerFlow = flow {
+        emit(service.getBanner())
+    }.map {
+        it.banners ?: listOf()
     }
-
-    private fun getBanner() {
-        val bannerFlow = flow {
-            emit(service.getBanner())
-        }.map {
-            val result = mutableListOf<Banner>()
-            it.let {
-                if (it.banners != null) {
-                    result.addAll(it.banners)
-                }
-            }
-            result
-        }
+    /**
+     *  首页Icon
+     * */
+    private val homeIconFlow = flow {
+        emit(service.getHomeIcon())
+    }.map {
+        it.data ?: listOf()
+    }
+    private fun getData() {
         viewModelScope.launch {
-            bannerFlow.onStart {
+            bannerFlow.zip(homeIconFlow){banners, icons ->
+                viewStates =
+                    viewStates.copy(isRefreshing = false,banner = banners,homeIcon = icons)
+            }.onStart {
                 viewStates = viewStates.copy(isRefreshing = true)
             }.catch {
                 viewStates = viewStates.copy(isRefreshing = false)
-            }.collect {
-                viewStates =
-                    viewStates.copy(banner = it, isRefreshing = false)
-            }
+            }.collect()
         }
-
     }
 
 }
 
 data class HomeViewState(
     val isRefreshing: Boolean = false,
-    val banner: List<Banner> = emptyList()
+    val banner: List<Banner> = listOf(),
+    val homeIcon: List<HomeIcon> = listOf()
 )
