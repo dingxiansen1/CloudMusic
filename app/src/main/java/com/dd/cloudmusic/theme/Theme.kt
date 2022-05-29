@@ -36,7 +36,7 @@ private val DarkColorPalette = HamColors(
 //白天主题
 private val LightColorPalette = HamColors(
     themeUi = themeColors[0],
-    background = white2,
+    background = white,
     listItem = white,
     divider = white3,
     textPrimary = black3,

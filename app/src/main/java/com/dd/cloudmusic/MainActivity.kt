@@ -12,10 +12,12 @@ import com.dd.cloudmusic.navigator.NavController
 import com.dd.cloudmusic.splash.SplashPage
 import com.dd.cloudmusic.theme.ComposeAppTheme
 import com.dd.cloudmusic.theme.Themem
+import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //初始化window工具类
