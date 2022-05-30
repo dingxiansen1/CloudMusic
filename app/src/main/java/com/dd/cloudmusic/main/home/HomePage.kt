@@ -3,12 +3,9 @@ package com.dd.cloudmusic.main.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -17,12 +14,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.dd.base.BaseApp
 import com.dd.base.ext.showToast
-import com.dd.base.widgets.RefreshList
 import com.dd.cloudmusic.R
-import com.dd.cloudmusic.bean.HomeIcon
-import com.dd.cloudmusic.main.drawer.MainDrawerPage
+import com.dd.cloudmusic.bean.HomeIconBean
 import com.dd.cloudmusic.theme.AppTheme
 import com.dd.cloudmusic.widget.Banner
 import com.dd.cloudmusic.widget.SearchBar
@@ -73,7 +67,7 @@ fun HomePage(
 }
 
 @Composable
-fun HomeIconPage(data:HomeIcon) {
+fun HomeIconPage(data:HomeIconBean) {
     Column(
         Modifier
             .height(80.dp)

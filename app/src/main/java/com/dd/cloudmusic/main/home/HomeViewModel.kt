@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.dd.base.BaseViewModel
 import com.dd.cloudmusic.bean.Banner
-import com.dd.cloudmusic.bean.HomeIcon
+import com.dd.cloudmusic.bean.HomeIconBean
 import com.dd.cloudmusic.net.HttpService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
     private val bannerFlow = flow {
         emit(service.getBanner())
     }.map {
-        it.banners ?: listOf()
+        it.banners ?: emptyList()
     }
     /**
      *  首页Icon
@@ -40,7 +40,7 @@ class HomeViewModel @Inject constructor(
     private val homeIconFlow = flow {
         emit(service.getHomeIcon())
     }.map {
-        it.data ?: listOf()
+        it.data ?: emptyList()
     }
     private fun getData() {
         viewModelScope.launch {
@@ -59,6 +59,6 @@ class HomeViewModel @Inject constructor(
 
 data class HomeViewState(
     val isRefreshing: Boolean = false,
-    val banner: List<Banner> = listOf(),
-    val homeIcon: List<HomeIcon> = listOf()
+    val banner: List<Banner> = emptyList(),
+    val homeIcon: List<HomeIconBean> = emptyList()
 )

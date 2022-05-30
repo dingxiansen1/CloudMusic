@@ -1,6 +1,6 @@
 package com.dd.cloudmusic.bean
 
-data class HomeIcon(
+data class HomeIconBean(
     val homepageMode: String,
     val iconUrl: String,
     val id: Int,

@@ -2,7 +2,7 @@ package com.dd.cloudmusic.net
 
 import com.dd.base.paging.BasicBean
 import com.dd.cloudmusic.bean.Banner
-import com.dd.cloudmusic.bean.HomeIcon
+import com.dd.cloudmusic.bean.HomeIconBean
 import com.dd.cloudmusic.bean.basebanner
 import retrofit2.http.GET
 
@@ -20,5 +20,5 @@ interface HttpService {
     suspend fun getBanner(): basebanner<List<Banner>?>
 
     @GET("/homepage/dragon/ball")
-    suspend fun getHomeIcon(): BasicBean<List<HomeIcon>?>
+    suspend fun getHomeIcon(): BasicBean<List<HomeIconBean>?>
 }
