@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.dd.base.BaseViewModel
 import com.dd.cloudmusic.bean.Banner
+import com.dd.cloudmusic.bean.Creative
 import com.dd.cloudmusic.bean.HomeIconBean
 import com.dd.cloudmusic.net.HttpService
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,10 +41,26 @@ class HomeViewModel @Inject constructor(
         }.map {
             it.data ?: emptyList()
         }
+        // 首页主要信息
+        val homePageFlow = flow {
+            emit(service.getHomePage())
+        }.map {
+            it.data?.blocks ?: emptyList()
+        }
         viewModelScope.launch {
-            bannerFlow.zip(homeIconFlow){banners, icons ->
+            bannerFlow.zip(homeIconFlow) { banners, icons ->
                 viewStates =
-                    viewStates.copy(isRefreshing = false,banner = banners,homeIcon = icons)
+                    viewStates.copy(isRefreshing = false, banner = banners, homeIcon = icons)
+            }.zip(homePageFlow) { it, bean ->
+                if (bean.size > 1) {
+                    viewStates =
+                        viewStates.copy(
+                            isRefreshing = false,
+                            banner = viewStates.banner,
+                            homeIcon = viewStates.homeIcon,
+                            recommendPlayList = bean[1].creatives
+                        )
+                }
             }.onStart {
                 viewStates = viewStates.copy(isRefreshing = true)
             }.catch {
@@ -57,5 +74,6 @@ class HomeViewModel @Inject constructor(
 data class HomeViewState(
     val isRefreshing: Boolean = false,
     val banner: List<Banner> = emptyList(),
-    val homeIcon: List<HomeIconBean> = emptyList()
+    val homeIcon: List<HomeIconBean> = emptyList(),
+    val recommendPlayList: List<Creative> = emptyList()
 )

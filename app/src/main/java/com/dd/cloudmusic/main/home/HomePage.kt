@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -17,6 +19,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.dd.base.ext.showToast
 import com.dd.cloudmusic.R
+import com.dd.cloudmusic.bean.Creative
 import com.dd.cloudmusic.bean.HomeIconBean
 import com.dd.cloudmusic.theme.AppTheme
 import com.dd.cloudmusic.widget.Banner
@@ -36,6 +39,7 @@ fun HomePage(
     val viewStates = viewModel.viewStates
     val banners = viewStates.banner
     val homeIcon = viewStates.homeIcon
+    val recommendPlayList = viewStates.recommendPlayList
     Column(
         modifier = Modifier.background(AppTheme.colors.background)
     ) {
@@ -64,6 +68,13 @@ fun HomePage(
                 }
             }
         }
+        if (recommendPlayList.isNotEmpty()) {
+            LazyRow {
+                items(recommendPlayList.size) { index ->
+                    HomeRecommendPage(recommendPlayList[index])
+                }
+            }
+        }
     }
 }
 
@@ -84,3 +95,33 @@ fun HomeIconPage(data: HomeIconBean) {
         Text(text = data.name, fontSize = 16.sp)
     }
 }
+
+@Composable
+fun HomeRecommendPage(data: Creative) {
+    Box(
+        modifier = Modifier
+            .height(150.dp)
+            .width(150.dp)
+            .padding(10.dp)
+    ) {
+        AsyncImage(
+            model = data.uiElement.image.imageUrl,
+            contentDescription = data.uiElement.mainTitle.title,
+            modifier = Modifier.fillMaxSize()
+        )
+        Text(
+            text = data.uiElement.mainTitle.title,
+            fontSize = 16.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(
+                    Alignment.BottomCenter
+                ),
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            style = TextStyle(color = AppTheme.colors.white)
+        )
+    }
+}
+
+

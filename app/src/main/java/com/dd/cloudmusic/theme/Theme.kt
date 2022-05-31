@@ -5,7 +5,6 @@ import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
-import com.dd.composeapp.ui.theme.*
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -23,7 +22,7 @@ private val DarkColorPalette = HamColors(
     mainColor = white,
     card = white1,
     icon = white4,
-    info = info,
+    white = white4,
     warn = warn,
     success = green3,
     error =red2,
@@ -44,7 +43,7 @@ private val LightColorPalette = HamColors(
     mainColor = white,
     card = white1,
     icon = white4,
-    info = info,
+    white = white4,
     warn = warn,
     success = green3,
     error = red2,
@@ -79,7 +78,7 @@ class HamColors(
     mainColor: Color,
     card: Color,
     icon: Color,
-    info: Color,
+    white: Color,
     warn: Color,
     success: Color,
     error: Color,
@@ -106,7 +105,7 @@ class HamColors(
         private set
     var icon: Color by mutableStateOf(icon)
         private set
-    var info: Color by mutableStateOf(info)
+    var white: Color by mutableStateOf(white)
         private set
     var warn: Color by mutableStateOf(warn)
         private set
@@ -184,7 +183,7 @@ fun ComposeAppTheme(
     val mainColor = animateColorAsState(targetColors.mainColor, TweenSpec(600))
     val card = animateColorAsState(targetColors.card, TweenSpec(600))
     val icon = animateColorAsState(targetColors.icon, TweenSpec(600))
-    val info = animateColorAsState(targetColors.info, TweenSpec(600))
+    val white = animateColorAsState(targetColors.white, TweenSpec(600))
     val warn = animateColorAsState(targetColors.warn, TweenSpec(600))
     val success = animateColorAsState(targetColors.success, TweenSpec(600))
     val error = animateColorAsState(targetColors.error, TweenSpec(600))
@@ -204,7 +203,7 @@ fun ComposeAppTheme(
         icon = icon.value,
         primaryBtnBg = primaryBtnBg.value,
         secondBtnBg = secondBtnBg.value,
-        info = info.value,
+        white = white.value,
         warn = warn.value,
         success = success.value,
         error = error.value,
