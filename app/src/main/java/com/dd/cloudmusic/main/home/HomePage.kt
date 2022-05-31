@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,9 +57,9 @@ fun HomePage(
                 showToast("暂未开发$title")
             }
         }
-        if(homeIcon.isNotEmpty()){
+        if (homeIcon.isNotEmpty()) {
             LazyRow {
-                items(homeIcon.size){ index->
+                items(homeIcon.size) { index ->
                     HomeIconPage(homeIcon[index])
                 }
             }
@@ -67,13 +68,19 @@ fun HomePage(
 }
 
 @Composable
-fun HomeIconPage(data:HomeIconBean) {
+fun HomeIconPage(data: HomeIconBean) {
     Column(
-        Modifier
+        modifier = Modifier
             .height(80.dp)
-            .width(80.dp)) {
-        AsyncImage(model = data.iconUrl, contentDescription = data.name,modifier = Modifier.size(56.dp).align(
-            Alignment.CenterHorizontally))
-        Text(text = data.name,textAlign = TextAlign.Center,fontSize = 16.sp)
+            .width(80.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        AsyncImage(
+            model = data.iconUrl,
+            contentDescription = data.name,
+            modifier = Modifier.size(56.dp),
+            colorFilter = ColorFilter.tint(AppTheme.colors.error)
+        )
+        Text(text = data.name, fontSize = 16.sp)
     }
 }
