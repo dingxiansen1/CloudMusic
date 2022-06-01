@@ -25,6 +25,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.bbgo.common_base.ext.isNotNull
 import com.dd.base.ext.showToast
+import com.dd.base.utils.sdp
 import com.dd.cloudmusic.R
 import com.dd.cloudmusic.bean.Creative
 import com.dd.cloudmusic.bean.HomeIconBean
@@ -47,7 +48,8 @@ fun HomePage(
     val viewStates = viewModel.viewStates
     val banners = viewStates.banner
     val homeIcon = viewStates.homeIcon
-    val recommendPlay= viewStates.recommendPlay
+    val recommendPlay = viewStates.recommendPlay
+    val slidePlay = viewStates.slidePlay
     Column(
         modifier = Modifier.background(AppTheme.colors.background)
     ) {
@@ -77,8 +79,8 @@ fun HomePage(
                 }
             }
         }
-        //推荐歌单
-        if (recommendPlay.isNotNull()) {
+        //推荐歌单       showType = HOMEPAGE_SLIDE_PLAYLIST
+        if (recommendPlay.isNotNull() && recommendPlay!!.showType == "HOMEPAGE_SLIDE_PLAYLIST") {
             Spacer(
                 modifier = Modifier
                     .height(20.dp)
@@ -89,7 +91,7 @@ fun HomePage(
                     .fillMaxWidth()
             ) {
                 Text(
-                    text = recommendPlay!!.uiElement.subTitle.title,
+                    text = recommendPlay.uiElement.subTitle.title,
                     fontSize = 18.sp,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
@@ -115,7 +117,7 @@ fun HomePage(
                         fontSize = 18.sp,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
-                            .padding(start = 20.dp,end = 10.dp),
+                            .padding(start = 20.dp, end = 10.dp),
                         style = TextStyle(color = AppTheme.colors.textPrimary)
                     )
                     Icon(
@@ -130,13 +132,73 @@ fun HomePage(
 
             }
             LazyRow {
-                items(recommendPlay!!.creatives.size) { index ->
-                    HomeRecommendPage(recommendPlay.creatives[index])
+                items(recommendPlay.creatives.size) { index ->
+                    HomeRecommendPlauyPage(recommendPlay.creatives[index])
                 }
             }
         }
+        //推荐歌曲 showType = HOMEPAGE_SLIDE_SONGLIST_ALIGN
+        if (slidePlay.isNotNull() && slidePlay!!.showType == "HOMEPAGE_SLIDE_SONGLIST_ALIGN") {
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .fillMaxWidth()
+            )
+            Box(
+                Modifier
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = slidePlay.uiElement.subTitle.title,
+                    fontSize = 18.sp,
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(start = 20.dp),
+                    style = TextStyle(color = AppTheme.colors.textPrimary),
+                    fontWeight = FontWeight.Bold
+                )
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(end = 20.dp)
+                        .border(
+                            width = 1.dp,
+                            color = AppTheme.colors.divider,
+                            shape = RoundedCornerShape(20.dp)
+                        )
+                        .clickable {
+                            showToast("暂未开发${slidePlay.uiElement.button.action}")
+                        }
+                ) {
+                    Text(
+                        "播放",
+                        fontSize = 18.sp,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 20.dp, end = 10.dp),
+                        style = TextStyle(color = AppTheme.colors.textPrimary)
+                    )
+                    Icon(
+                        painter = painterResource(id = R.mipmap.icon_back_right),
+                        contentDescription = "播放",
+                        modifier = Modifier
+                            .size(36.dp)
+                            .align(Alignment.CenterVertically)
+                            .padding(end = 20.dp)
+                    )
+                }
+                LazyRow {
+                    items(slidePlay.creatives.size) { index ->
+                        HomeRecommendSongPage(slidePlay.creatives[index])
+                    }
+                }
+
+            }
+        }
+
     }
 }
+
 
 @Composable
 fun HomeIconPage(data: HomeIconBean) {
@@ -162,15 +224,17 @@ fun HomeIconPage(data: HomeIconBean) {
         )
     }
 }
-
+/*
+* 推荐歌单
+* */
 @ExperimentalPagerApi
 @Composable
-fun HomeRecommendPage(data: Creative) {
+fun HomeRecommendPlauyPage(data: Creative) {
     if (data.creativeType == "scroll_playlist") {
-        ScrollPlayList(list = data.resources){
+        ScrollPlayList(list = data.resources) {
             showToast("暂未开发：${it.uiElement.mainTitle.title}")
         }
-    }else{
+    } else {
         Column(
             modifier = Modifier
                 .width(150.dp)
@@ -199,6 +263,38 @@ fun HomeRecommendPage(data: Creative) {
                 overflow = TextOverflow.Ellipsis,
                 style = TextStyle(color = AppTheme.colors.textPrimary)
             )
+        }
+    }
+}
+/*
+* 推荐歌曲
+* */
+@Composable
+fun HomeRecommendSongPage(creative: Creative) {
+    Column(Modifier.width(860.sdp)) {
+        for (item in creative.resources){
+            Row(Modifier.padding(10.sdp)) {
+                AsyncImage(
+                    model = item.uiElement.image.imageUrl,
+                    contentDescription = item.uiElement.mainTitle.title,
+                    modifier = Modifier
+                        .height(80.dp)
+                        .width(80.dp)
+                        .clip(shape = RoundedCornerShape(16.dp)),
+                    contentScale = ContentScale.Crop,
+                )
+                Text(
+                    text = item.uiElement.mainTitle.title,
+                    fontSize = 16.sp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp)
+                        .align(Alignment.CenterVertically),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = TextStyle(color = AppTheme.colors.textPrimary)
+                )
+            }
         }
     }
 }

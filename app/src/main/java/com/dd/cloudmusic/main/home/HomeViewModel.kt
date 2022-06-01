@@ -36,7 +36,7 @@ class HomeViewModel @Inject constructor(
         }.map {
             it.banners ?: emptyList()
         }.catch {
-            Log.e("请求bannerFlow","失败${it}")
+            Log.e("请求bannerFlow", "失败${it}")
         }
         // 首页Icon
         val homeIconFlow = flow {
@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(
         }.map {
             it.data ?: emptyList()
         }.catch {
-            Log.e("请求homeIconFlow","失败${it}")
+            Log.e("请求homeIconFlow", "失败${it}")
         }
         // 首页主要信息
         val homePageFlow = flow {
@@ -52,12 +52,18 @@ class HomeViewModel @Inject constructor(
         }.map {
             it.data?.blocks ?: emptyList()
         }.catch {
-            Log.e("请求homePageFlow","失败${it}")
+            Log.e("请求homePageFlow", "失败${it}")
         }
         viewModelScope.launch {
-            combine(bannerFlow,homeIconFlow,homePageFlow){banners, icons, bean ->
+            combine(bannerFlow, homeIconFlow, homePageFlow) { banners, icons, bean ->
                 viewStates =
-                    viewStates.copy(isRefreshing = false, banner = banners, homeIcon = icons,recommendPlay = bean[1])
+                    viewStates.copy(
+                        isRefreshing = false,
+                        banner = banners,
+                        homeIcon = icons,
+                        recommendPlay = bean[1],
+                        slidePlay = bean[2]
+                    )
             }.onStart {
                 viewStates = viewStates.copy(isRefreshing = true)
             }.catch {
@@ -72,5 +78,6 @@ data class HomeViewState(
     val isRefreshing: Boolean = false,
     val banner: List<Banner> = emptyList(),
     val homeIcon: List<HomeIconBean> = emptyList(),
-    val recommendPlay: Block ?=null
+    val recommendPlay: Block? = null,
+    val slidePlay: Block? = null
 )

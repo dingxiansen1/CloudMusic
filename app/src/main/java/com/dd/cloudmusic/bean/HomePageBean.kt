@@ -516,7 +516,7 @@ data class BMusic(
     val playTime: Int,
     val size: Int,
     val sr: Int,
-    val volumeDelta: Int,
+    val volumeDelta: Float,
     val xInfo: Any
 )
 
@@ -530,7 +530,7 @@ data class HMusic(
     val playTime: Int,
     val size: Int,
     val sr: Int,
-    val volumeDelta: Int,
+    val volumeDelta: Float,
     val xInfo: Any
 )
 
@@ -544,7 +544,7 @@ data class LMusic(
     val playTime: Int,
     val size: Int,
     val sr: Int,
-    val volumeDelta: Int,
+    val volumeDelta: Float,
     val xInfo: Any
 )
 
@@ -616,7 +616,7 @@ data class H(
     val fid: Int,
     val size: Int,
     val sr: Int,
-    val vd: Int
+    val vd: Float
 )
 
 data class L(
@@ -624,7 +624,7 @@ data class L(
     val fid: Int,
     val size: Int,
     val sr: Int,
-    val vd: Int
+    val vd: Float
 )
 
 data class M(
@@ -632,7 +632,7 @@ data class M(
     val fid: Int,
     val size: Int,
     val sr: Int,
-    val vd: Int
+    val vd: Float
 )
 
 data class Pc(
@@ -652,7 +652,7 @@ data class Sq(
     val fid: Int,
     val size: Int,
     val sr: Int,
-    val vd: Int
+    val vd: Float
 )
 
 data class VideoInfo(
@@ -714,7 +714,7 @@ data class BMusicX(
     val playTime: Int,
     val size: Int,
     val sr: Int,
-    val volumeDelta: Int
+    val volumeDelta: Float
 )
 
 data class HMusicX(
@@ -726,7 +726,7 @@ data class HMusicX(
     val playTime: Int,
     val size: Int,
     val sr: Int,
-    val volumeDelta: Int
+    val volumeDelta: Float
 )
 
 data class LMusicX(
@@ -738,7 +738,7 @@ data class LMusicX(
     val playTime: Int,
     val size: Int,
     val sr: Int,
-    val volumeDelta: Int
+    val volumeDelta: Float
 )
 
 data class MMusic(
@@ -750,7 +750,7 @@ data class MMusic(
     val playTime: Int,
     val size: Int,
     val sr: Int,
-    val volumeDelta: Int
+    val volumeDelta: Float
 )
 
 data class SqMusic(
@@ -762,7 +762,7 @@ data class SqMusic(
     val playTime: Int,
     val size: Int,
     val sr: Int,
-    val volumeDelta: Int
+    val volumeDelta: Float
 )
 
 data class ArtistXXXX(
