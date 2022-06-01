@@ -1,12 +1,17 @@
 package com.dd.cloudmusic.main
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.navigation.NavHostController
+import com.dd.base.utils.sdp
 import com.dd.cloudmusic.main.drawer.MainDrawerPage
 import com.dd.cloudmusic.main.find.FindPage
 import com.dd.cloudmusic.main.home.HomePage
@@ -33,6 +38,7 @@ fun MainPage(navCtrl: NavHostController) {
             drawerGesturesEnabled = false,
             bottomBar = {
                 BottomNavigation(
+                    modifier  =Modifier.fillMaxWidth().height(150.sdp),
                     backgroundColor = AppTheme.colors.background
                 ) {
                     items.forEachIndexed { index, item ->
