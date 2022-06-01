@@ -50,9 +50,8 @@ fun ScrollPlayList(
     Column(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
-            .fillMaxWidth()
-            .padding(16.dp)
-            .height(180.dp)
+            .width(150.dp)
+            .padding(10.dp)
     ) {
 
         if (list == null) {
@@ -88,6 +87,8 @@ fun ScrollPlayList(
                 count = list.size,
                 state = pagerState,
                 modifier = Modifier
+                    .height(150.dp)
+                    .width(150.dp)
                     .pointerInput(pagerState.currentPage) {
                         awaitPointerEventScope {
                             while (true) {
@@ -128,7 +129,8 @@ fun ScrollPlayList(
                 AsyncImage(
                     model = list[page].uiElement.image.imageUrl,
                     modifier = Modifier
-                        .fillMaxSize()
+                        .height(150.dp)
+                        .width(150.dp)
                         .clip(shape = RoundedCornerShape(16.dp)),
                     contentScale = ContentScale.Crop,
                     contentDescription = null

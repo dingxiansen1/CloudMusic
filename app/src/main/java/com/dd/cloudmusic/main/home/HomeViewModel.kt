@@ -35,33 +35,29 @@ class HomeViewModel @Inject constructor(
             emit(service.getBanner())
         }.map {
             it.banners ?: emptyList()
+        }.catch {
+            Log.e("请求bannerFlow","失败${it}")
         }
         // 首页Icon
         val homeIconFlow = flow {
             emit(service.getHomeIcon())
         }.map {
             it.data ?: emptyList()
+        }.catch {
+            Log.e("请求homeIconFlow","失败${it}")
         }
         // 首页主要信息
         val homePageFlow = flow {
             emit(service.getHomePage())
         }.map {
             it.data?.blocks ?: emptyList()
+        }.catch {
+            Log.e("请求homePageFlow","失败${it}")
         }
         viewModelScope.launch {
-            bannerFlow.zip(homeIconFlow) { banners, icons ->
+            combine(bannerFlow,homeIconFlow,homePageFlow){banners, icons, bean ->
                 viewStates =
-                    viewStates.copy(isRefreshing = false, banner = banners, homeIcon = icons)
-            }.zip(homePageFlow) { it, bean ->
-                if (bean.size > 1) {
-                    viewStates =
-                        viewStates.copy(
-                            isRefreshing = false,
-                            banner = viewStates.banner,
-                            homeIcon = viewStates.homeIcon,
-                            recommendPlay = bean[1]
-                        )
-                }
+                    viewStates.copy(isRefreshing = false, banner = banners, homeIcon = icons,recommendPlay = bean[1])
             }.onStart {
                 viewStates = viewStates.copy(isRefreshing = true)
             }.catch {

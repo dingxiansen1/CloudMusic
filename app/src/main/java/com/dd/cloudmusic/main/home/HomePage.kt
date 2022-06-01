@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -185,7 +186,8 @@ fun HomeRecommendPage(data: Creative) {
                 modifier = Modifier
                     .height(150.dp)
                     .width(150.dp)
-                    .clip(RoundedCornerShape(20)),
+                    .clip(shape = RoundedCornerShape(16.dp)),
+                contentScale = ContentScale.Crop,
             )
             Text(
                 text = data.uiElement.mainTitle.title,

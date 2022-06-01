@@ -141,7 +141,7 @@ data class Artist(
 )
 
 data class CommentSimpleData(
-    val commentId: Int,
+    val commentId: Long,
     val content: String,
     val threadId: String,
     val userId: Int,
