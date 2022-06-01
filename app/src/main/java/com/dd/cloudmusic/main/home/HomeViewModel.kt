@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.dd.base.BaseViewModel
 import com.dd.cloudmusic.bean.Banner
+import com.dd.cloudmusic.bean.Block
 import com.dd.cloudmusic.bean.Creative
 import com.dd.cloudmusic.bean.HomeIconBean
 import com.dd.cloudmusic.net.HttpService
@@ -58,7 +59,7 @@ class HomeViewModel @Inject constructor(
                             isRefreshing = false,
                             banner = viewStates.banner,
                             homeIcon = viewStates.homeIcon,
-                            recommendPlayList = bean[1].creatives
+                            recommendPlay = bean[1]
                         )
                 }
             }.onStart {
@@ -75,5 +76,5 @@ data class HomeViewState(
     val isRefreshing: Boolean = false,
     val banner: List<Banner> = emptyList(),
     val homeIcon: List<HomeIconBean> = emptyList(),
-    val recommendPlayList: List<Creative> = emptyList()
+    val recommendPlay: Block ?=null
 )

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,12 +16,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.dd.cloudmusic.R
 import com.dd.cloudmusic.bean.Banner
+import com.dd.cloudmusic.bean.Creative
+import com.dd.cloudmusic.bean.Resource
+import com.dd.cloudmusic.theme.AppTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.VerticalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
 
@@ -28,20 +36,18 @@ import kotlinx.coroutines.delay
  * 轮播图
  * [timeMillis] 停留时间
  * [loadImage] 加载中显示的布局
- * [indicatorAlignment] 指示点的的位置,默认是轮播图下方的中间,带一点padding
  * [onClick] 轮播图点击事件
  */
 @ExperimentalPagerApi
 @Composable
-fun Banner(
-    list: List<Banner>?,
+fun ScrollPlayList(
+    list: List<Resource>?,
     timeMillis: Long = 3000,
     @DrawableRes loadImage: Int = R.mipmap.no_banner,
-    indicatorAlignment: Alignment = Alignment.BottomCenter,
-    onClick: (link: String, title: String) -> Unit
+    onClick: (resource:Resource) -> Unit
 ) {
 
-    Box(
+    Column(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
             .fillMaxWidth()
@@ -53,7 +59,9 @@ fun Banner(
             //加载中的图片
             AsyncImage(
                 model = loadImage,
-                modifier = Modifier.fillMaxSize().clip(shape = RoundedCornerShape(16.dp)),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(shape = RoundedCornerShape(16.dp)),
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )
@@ -76,7 +84,7 @@ fun Banner(
                 }
             }
 
-            HorizontalPager(
+            VerticalPager(
                 count = list.size,
                 state = pagerState,
                 modifier = Modifier
@@ -112,57 +120,30 @@ fun Banner(
                     }
                     .clickable {
                         with(list[pagerState.currentPage]) {
-                            onClick.invoke(imageUrl, typeTitle)
+                            onClick.invoke(list[pagerState.currentPage])
                         }
                     }
                     .fillMaxSize(),
             ) { page ->
                 AsyncImage(
-                    model = list[page].imageUrl,
-                    modifier = Modifier.fillMaxSize().clip(shape = RoundedCornerShape(16.dp)),
+                    model = list[page].uiElement.image.imageUrl,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(shape = RoundedCornerShape(16.dp)),
                     contentScale = ContentScale.Crop,
                     contentDescription = null
                 )
             }
-
-            Box(
+            Text(
+                text = list[pagerState.currentPage].uiElement.mainTitle.title,
+                fontSize = 16.sp,
                 modifier = Modifier
-                    .align(indicatorAlignment)
-                    .padding(bottom = 6.dp, start = 6.dp, end = 6.dp)
-            ) {
-
-                //指示点
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    for (i in list.indices) {
-                        //大小
-                        var size by remember { mutableStateOf(5.dp) }
-                        size = if (pagerState.currentPage == i) 7.dp else 5.dp
-
-                        //颜色
-                        val color =
-                            if (pagerState.currentPage == i) MaterialTheme.colors.primary else Color.Gray
-
-                        Box(
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .background(color)
-                                //当size改变的时候以动画的形式改变
-                                .animateContentSize()
-                                .size(size)
-                        )
-                        //指示点间的间隔
-                        if (i != list.lastIndex) Spacer(
-                            modifier = Modifier
-                                .height(0.dp)
-                                .width(4.dp)
-                        )
-                    }
-                }
-
-            }
+                    .fillMaxWidth()
+                    .padding(5.dp),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                style = TextStyle(color = AppTheme.colors.textPrimary)
+            )
         }
 
     }
