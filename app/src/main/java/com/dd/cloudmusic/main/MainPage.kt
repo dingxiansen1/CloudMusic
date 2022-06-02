@@ -11,7 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.navigation.NavHostController
-import com.dd.base.utils.sdp
+import com.dd.base.utils.wdp
 import com.dd.cloudmusic.main.drawer.MainDrawerPage
 import com.dd.cloudmusic.main.find.FindPage
 import com.dd.cloudmusic.main.home.HomePage
@@ -38,7 +38,7 @@ fun MainPage(navCtrl: NavHostController) {
             drawerGesturesEnabled = false,
             bottomBar = {
                 BottomNavigation(
-                    modifier  =Modifier.fillMaxWidth().height(150.sdp),
+                    modifier  =Modifier.fillMaxWidth().height(150.wdp),
                     backgroundColor = AppTheme.colors.background
                 ) {
                     items.forEachIndexed { index, item ->
