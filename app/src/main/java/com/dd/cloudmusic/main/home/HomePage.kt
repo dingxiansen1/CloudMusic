@@ -23,7 +23,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.bbgo.common_base.ext.isNotNull
 import com.dd.base.ext.showToast
-import com.dd.base.utils.wdp
+import com.dd.base.utils.sdp
 import com.dd.cloudmusic.R
 import com.dd.cloudmusic.bean.Creative
 import com.dd.cloudmusic.bean.HomeIconBean
@@ -68,7 +68,7 @@ fun HomePage(
         )
         Column(
             //导航栏高度150。如果不设置padding会被导航栏挡住
-            Modifier.verticalScroll(state).padding(bottom = 160.wdp)
+            Modifier.verticalScroll(state).padding(bottom = 160.sdp)
         ) {
             if (banners.isNotEmpty()) {
                 Banner(list = banners) { url, title ->
@@ -86,7 +86,7 @@ fun HomePage(
             if (recommendPlay.isNotNull() && recommendPlay!!.showType == "HOMEPAGE_SLIDE_PLAYLIST") {
                 Spacer(
                     modifier = Modifier
-                        .height(20.wdp)
+                        .height(20.sdp)
                         .fillMaxWidth()
                 )
                 Box(
@@ -98,20 +98,20 @@ fun HomePage(
                         fontSize = 18.sp,
                         modifier = Modifier
                             .align(Alignment.CenterStart)
-                            .padding(start = 40.wdp),
+                            .padding(start = 40.sdp),
                         style = TextStyle(color = AppTheme.colors.textPrimary),
                         fontWeight = FontWeight.Bold
                     )
                     Row(
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
-                            .padding(end = 40.wdp)
+                            .padding(end = 40.sdp)
                             .border(
-                                width = 1.wdp,
+                                width = 1.sdp,
                                 color = AppTheme.colors.divider,
-                                shape = RoundedCornerShape(50.wdp)
+                                shape = RoundedCornerShape(50.sdp)
                             )
-                            .clip(RoundedCornerShape(50.wdp))
+                            .clip(RoundedCornerShape(50.sdp))
                             .clickable {
                                 showToast("暂未开发${recommendPlay.uiElement.button.action}")
                             }
@@ -121,16 +121,16 @@ fun HomePage(
                             fontSize = 18.sp,
                             modifier = Modifier
                                 .align(Alignment.CenterVertically)
-                                .padding(start = 30.wdp, end = 10.wdp),
+                                .padding(start = 30.sdp, end = 10.sdp),
                             style = TextStyle(color = AppTheme.colors.textPrimary)
                         )
                         Icon(
                             painter = painterResource(id = R.mipmap.icon_back_right),
                             contentDescription = "更多",
                             modifier = Modifier
-                                .size(66.wdp)
+                                .size(66.sdp)
                                 .align(Alignment.CenterVertically)
-                                .padding(end = 20.wdp)
+                                .padding(end = 20.sdp)
                         )
                     }
 
@@ -145,7 +145,7 @@ fun HomePage(
             if (slidePlay.isNotNull() && slidePlay!!.showType == "HOMEPAGE_SLIDE_SONGLIST_ALIGN") {
                 Spacer(
                     modifier = Modifier
-                        .height(20.wdp)
+                        .height(20.sdp)
                         .fillMaxWidth()
                 )
                 Box(
@@ -157,20 +157,20 @@ fun HomePage(
                         fontSize = 18.sp,
                         modifier = Modifier
                             .align(Alignment.CenterStart)
-                            .padding(start = 40.wdp),
+                            .padding(start = 40.sdp),
                         style = TextStyle(color = AppTheme.colors.textPrimary),
                         fontWeight = FontWeight.Bold
                     )
                     Row(
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
-                            .padding(end = 40.wdp)
+                            .padding(end = 40.sdp)
                             .border(
                                 width = 1.dp,
                                 color = AppTheme.colors.divider,
-                                shape = RoundedCornerShape(50.wdp)
+                                shape = RoundedCornerShape(50.sdp)
                             )
-                            .clip(RoundedCornerShape(50.wdp))
+                            .clip(RoundedCornerShape(50.sdp))
                             .clickable {
                                 showToast("暂未开发${slidePlay.uiElement.button.action}")
                             }
@@ -180,16 +180,16 @@ fun HomePage(
                             fontSize = 18.sp,
                             modifier = Modifier
                                 .align(Alignment.CenterVertically)
-                                .padding(start = 30.wdp, end = 10.wdp),
+                                .padding(start = 30.sdp, end = 10.sdp),
                             style = TextStyle(color = AppTheme.colors.textPrimary)
                         )
                         Icon(
                             painter = painterResource(id = R.mipmap.icon_back_right),
                             contentDescription = "播放",
                             modifier = Modifier
-                                .size(66.wdp)
+                                .size(66.sdp)
                                 .align(Alignment.CenterVertically)
-                                .padding(end = 20.wdp)
+                                .padding(end = 20.sdp)
                         )
                     }
                 }
@@ -244,8 +244,8 @@ fun HomeRecommendPlauyPage(data: Creative) {
     } else {
         Column(
             modifier = Modifier
-                .width(150.dp)
-                .padding(10.dp)
+                .width(150.sdp)
+                .padding(10.sdp)
                 .clickable {
                     showToast("暂未开发")
                 },
@@ -255,9 +255,9 @@ fun HomeRecommendPlauyPage(data: Creative) {
                 model = data.uiElement.image.imageUrl,
                 contentDescription = data.uiElement.mainTitle.title,
                 modifier = Modifier
-                    .height(150.dp)
-                    .width(150.dp)
-                    .clip(shape = RoundedCornerShape(16.dp)),
+                    .height(150.sdp)
+                    .width(150.sdp)
+                    .clip(shape = RoundedCornerShape(16.sdp)),
                 contentScale = ContentScale.Crop,
             )
             Text(
@@ -265,7 +265,7 @@ fun HomeRecommendPlauyPage(data: Creative) {
                 fontSize = 16.sp,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp),
+                    .padding(5.sdp),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 style = TextStyle(color = AppTheme.colors.textPrimary)
@@ -279,15 +279,15 @@ fun HomeRecommendPlauyPage(data: Creative) {
 * */
 @Composable
 fun HomeRecommendSongPage(creative: Creative) {
-    Column(Modifier.width(860.wdp)) {
+    Column(Modifier.width(860.sdp)) {
         for (item in creative.resources) {
-            Row(Modifier.padding(10.wdp)) {
+            Row(Modifier.padding(10.sdp)) {
                 AsyncImage(
                     model = item.uiElement.image.imageUrl,
                     contentDescription = item.uiElement.mainTitle.title,
                     modifier = Modifier
-                        .height(80.wdp)
-                        .width(80.wdp)
+                        .height(80.sdp)
+                        .width(80.sdp)
                         .clip(shape = RoundedCornerShape(16.dp)),
                     contentScale = ContentScale.Crop,
                 )
@@ -296,7 +296,7 @@ fun HomeRecommendSongPage(creative: Creative) {
                     fontSize = 16.sp,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(5.wdp)
+                        .padding(5.sdp)
                         .align(Alignment.CenterVertically),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,

@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.dd.base.utils.wdp
+import com.dd.base.utils.sdp
 import com.dd.cloudmusic.R
 import com.dd.cloudmusic.bean.Banner
 import com.dd.cloudmusic.bean.Creative
@@ -51,8 +51,8 @@ fun ScrollPlayList(
     Column(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
-            .width(150.dp)
-            .padding(10.dp)
+            .width(150.sdp)
+            .padding(10.sdp)
     ) {
 
         if (list == null) {
@@ -88,8 +88,8 @@ fun ScrollPlayList(
                 count = list.size,
                 state = pagerState,
                 modifier = Modifier
-                    .height(150.dp)
-                    .width(150.dp)
+                    .height(150.sdp)
+                    .width(150.sdp)
                     .pointerInput(pagerState.currentPage) {
                         awaitPointerEventScope {
                             while (true) {
@@ -120,7 +120,7 @@ fun ScrollPlayList(
                             }
                         }
                     }
-                    .clip(RoundedCornerShape(50.wdp))
+                    .clip(RoundedCornerShape(16.sdp))
                     .clickable {//点击事件在clip后面，这样按下效果才会跟着被clip
                         with(list[pagerState.currentPage]) {
                             onClick.invoke(list[pagerState.currentPage])
@@ -131,9 +131,9 @@ fun ScrollPlayList(
                 AsyncImage(
                     model = list[page].uiElement.image.imageUrl,
                     modifier = Modifier
-                        .height(150.dp)
-                        .width(150.dp)
-                        .clip(RoundedCornerShape(50.wdp)),
+                        .height(150.sdp)
+                        .width(150.sdp)
+                        .clip(RoundedCornerShape(16.sdp)),
                     contentScale = ContentScale.Crop,
                     contentDescription = null
                 )
