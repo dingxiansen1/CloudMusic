@@ -17,6 +17,7 @@ import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.dd.base.utils.sdp
 import com.dd.cloudmusic.R
 import com.dd.cloudmusic.bean.Banner
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -53,7 +54,9 @@ fun Banner(
             //加载中的图片
             AsyncImage(
                 model = loadImage,
-                modifier = Modifier.fillMaxSize().clip(shape = RoundedCornerShape(16.dp)),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(shape = RoundedCornerShape(16.dp)),
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )
@@ -110,7 +113,8 @@ fun Banner(
                             }
                         }
                     }
-                    .clickable {
+                    .clip(RoundedCornerShape(50.sdp))
+                    .clickable { //点击事件在clip后面，这样按下效果才会跟着被clip
                         with(list[pagerState.currentPage]) {
                             onClick.invoke(imageUrl, typeTitle)
                         }
@@ -119,7 +123,9 @@ fun Banner(
             ) { page ->
                 AsyncImage(
                     model = list[page].imageUrl,
-                    modifier = Modifier.fillMaxSize().clip(shape = RoundedCornerShape(16.dp)),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(50.sdp)),
                     contentScale = ContentScale.Crop,
                     contentDescription = null
                 )

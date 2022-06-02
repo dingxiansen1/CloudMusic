@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.dd.base.utils.sdp
 import com.dd.cloudmusic.R
 import com.dd.cloudmusic.bean.Banner
 import com.dd.cloudmusic.bean.Creative
@@ -44,7 +45,7 @@ fun ScrollPlayList(
     list: List<Resource>?,
     timeMillis: Long = 3000,
     @DrawableRes loadImage: Int = R.mipmap.no_banner,
-    onClick: (resource:Resource) -> Unit
+    onClick: (resource: Resource) -> Unit
 ) {
 
     Column(
@@ -119,7 +120,8 @@ fun ScrollPlayList(
                             }
                         }
                     }
-                    .clickable {
+                    .clip(RoundedCornerShape(50.sdp))
+                    .clickable {//点击事件在clip后面，这样按下效果才会跟着被clip
                         with(list[pagerState.currentPage]) {
                             onClick.invoke(list[pagerState.currentPage])
                         }
@@ -131,7 +133,7 @@ fun ScrollPlayList(
                     modifier = Modifier
                         .height(150.dp)
                         .width(150.dp)
-                        .clip(shape = RoundedCornerShape(16.dp)),
+                        .clip(RoundedCornerShape(50.sdp)),
                     contentScale = ContentScale.Crop,
                     contentDescription = null
                 )
