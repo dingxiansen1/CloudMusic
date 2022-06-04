@@ -244,7 +244,7 @@ fun HomeRecommendPlauyPage(data: Creative) {
     } else {
         Column(
             modifier = Modifier
-                .width(150.sdp)
+                .width(300.sdp)
                 .padding(10.sdp)
                 .clickable {
                     showToast("暂未开发")
@@ -255,9 +255,8 @@ fun HomeRecommendPlauyPage(data: Creative) {
                 model = data.uiElement.image.imageUrl,
                 contentDescription = data.uiElement.mainTitle.title,
                 modifier = Modifier
-                    .height(150.sdp)
-                    .width(150.sdp)
-                    .clip(shape = RoundedCornerShape(16.sdp)),
+                    .size(300.sdp)
+                    .clip(shape = RoundedCornerShape(50.sdp)),
                 contentScale = ContentScale.Crop,
             )
             Text(
@@ -286,8 +285,7 @@ fun HomeRecommendSongPage(creative: Creative) {
                     model = item.uiElement.image.imageUrl,
                     contentDescription = item.uiElement.mainTitle.title,
                     modifier = Modifier
-                        .height(80.sdp)
-                        .width(80.sdp)
+                        .size(80.sdp)
                         .clip(shape = RoundedCornerShape(16.dp)),
                     contentScale = ContentScale.Crop,
                 )

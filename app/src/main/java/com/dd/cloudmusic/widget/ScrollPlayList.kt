@@ -51,7 +51,7 @@ fun ScrollPlayList(
     Column(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
-            .width(150.sdp)
+            .width(300.sdp)
             .padding(10.sdp)
     ) {
 
@@ -61,7 +61,7 @@ fun ScrollPlayList(
                 model = loadImage,
                 modifier = Modifier
                     .fillMaxSize()
-                    .clip(shape = RoundedCornerShape(16.dp)),
+                    .clip(shape = RoundedCornerShape(50.sdp)),
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )
@@ -88,8 +88,7 @@ fun ScrollPlayList(
                 count = list.size,
                 state = pagerState,
                 modifier = Modifier
-                    .height(150.sdp)
-                    .width(150.sdp)
+                    .size(300.sdp)
                     .pointerInput(pagerState.currentPage) {
                         awaitPointerEventScope {
                             while (true) {
@@ -120,7 +119,7 @@ fun ScrollPlayList(
                             }
                         }
                     }
-                    .clip(RoundedCornerShape(16.sdp))
+                    .clip(RoundedCornerShape(50.sdp))
                     .clickable {//点击事件在clip后面，这样按下效果才会跟着被clip
                         with(list[pagerState.currentPage]) {
                             onClick.invoke(list[pagerState.currentPage])
@@ -131,9 +130,8 @@ fun ScrollPlayList(
                 AsyncImage(
                     model = list[page].uiElement.image.imageUrl,
                     modifier = Modifier
-                        .height(150.sdp)
-                        .width(150.sdp)
-                        .clip(RoundedCornerShape(16.sdp)),
+                        .size(300.sdp)
+                        .clip(RoundedCornerShape(50.sdp)),
                     contentScale = ContentScale.Crop,
                     contentDescription = null
                 )

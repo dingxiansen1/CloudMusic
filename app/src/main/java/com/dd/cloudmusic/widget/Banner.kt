@@ -46,8 +46,8 @@ fun Banner(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
             .fillMaxWidth()
-            .padding(16.dp)
-            .height(180.dp)
+            .padding(16.sdp)
+            .height(330.sdp)
     ) {
 
         if (list == null) {
@@ -56,7 +56,7 @@ fun Banner(
                 model = loadImage,
                 modifier = Modifier
                     .fillMaxSize()
-                    .clip(shape = RoundedCornerShape(16.dp)),
+                    .clip(shape = RoundedCornerShape(50.dp)),
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )
@@ -113,7 +113,7 @@ fun Banner(
                             }
                         }
                     }
-                    .clip(RoundedCornerShape(16.sdp))
+                    .clip(RoundedCornerShape(50.sdp))
                     .clickable { //点击事件在clip后面，这样按下效果才会跟着被clip
                         with(list[pagerState.currentPage]) {
                             onClick.invoke(imageUrl, typeTitle)
@@ -125,7 +125,7 @@ fun Banner(
                     model = list[page].imageUrl,
                     modifier = Modifier
                         .fillMaxSize()
-                        .clip(RoundedCornerShape(16.sdp)),
+                        .clip(RoundedCornerShape(50.sdp)),
                     contentScale = ContentScale.Crop,
                     contentDescription = null
                 )
