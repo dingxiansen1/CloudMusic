@@ -35,7 +35,7 @@ class HomeViewModel @Inject constructor(
         }.map {
             it.banners ?: emptyList()
         }.catch {
-            LogUtils.d("请求bannerFlow失败：${it}")
+            LogUtils.e("请求bannerFlow失败：${it}")
         }
         // 首页Icon
         val homeIconFlow = flow {
@@ -43,7 +43,7 @@ class HomeViewModel @Inject constructor(
         }.map {
             it.data ?: emptyList()
         }.catch {
-            LogUtils.d("请求homeIconFlow失败：${it}")
+            LogUtils.e("请求homeIconFlow失败：${it}")
         }
         // 首页主要信息
         val homePageFlow = flow {
@@ -51,7 +51,7 @@ class HomeViewModel @Inject constructor(
         }.map {
             it.data?.blocks ?: emptyList()
         }.catch {
-            LogUtils.d("请求homePageFlow失败：${it}")
+            LogUtils.e("请求homePageFlow失败：${it}")
         }
         viewModelScope.launch {
             combine(bannerFlow, homeIconFlow, homePageFlow) { banners, icons, bean ->
