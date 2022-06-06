@@ -1,14 +1,13 @@
 package com.dd.cloudmusic.main.home
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.dd.base.BaseViewModel
+import com.dd.base.utils.log.LogUtils
 import com.dd.cloudmusic.bean.Banner
 import com.dd.cloudmusic.bean.Block
-import com.dd.cloudmusic.bean.Creative
 import com.dd.cloudmusic.bean.HomeIconBean
 import com.dd.cloudmusic.net.HttpService
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,7 +35,7 @@ class HomeViewModel @Inject constructor(
         }.map {
             it.banners ?: emptyList()
         }.catch {
-            Log.e("请求bannerFlow", "失败${it}")
+            LogUtils.d("请求bannerFlow失败：${it}")
         }
         // 首页Icon
         val homeIconFlow = flow {
@@ -44,7 +43,7 @@ class HomeViewModel @Inject constructor(
         }.map {
             it.data ?: emptyList()
         }.catch {
-            Log.e("请求homeIconFlow", "失败${it}")
+            LogUtils.d("请求homeIconFlow失败：${it}")
         }
         // 首页主要信息
         val homePageFlow = flow {
@@ -52,7 +51,7 @@ class HomeViewModel @Inject constructor(
         }.map {
             it.data?.blocks ?: emptyList()
         }.catch {
-            Log.e("请求homePageFlow", "失败${it}")
+            LogUtils.d("请求homePageFlow失败：${it}")
         }
         viewModelScope.launch {
             combine(bannerFlow, homeIconFlow, homePageFlow) { banners, icons, bean ->
