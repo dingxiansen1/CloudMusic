@@ -35,7 +35,7 @@ class HomeViewModel @Inject constructor(
         }.map {
             it.banners ?: emptyList()
         }.catch {
-            LogUtils.e("请求bannerFlow失败：${it}")
+            LogUtils.e("请求homebannerFlow失败：${it}")
         }
         // 首页Icon
         val homeIconFlow = flow {
