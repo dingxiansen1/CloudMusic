@@ -33,22 +33,25 @@ class HomeViewModel @Inject constructor(
         val bannerFlow = flow {
             emit(service.getBanner())
         }.map {
+            LogUtils.json(it.banners)
             it.banners ?: emptyList()
         }.catch {
-            LogUtils.e("请求bannerFlow失败：${it}")
+            LogUtils.e("请求homePageFlow成功：${it}")
         }
         // 首页Icon
         val homeIconFlow = flow {
             emit(service.getHomeIcon())
         }.map {
+            LogUtils.json(it.data)
             it.data ?: emptyList()
         }.catch {
-            LogUtils.e("请求homeIconFlow失败：${it}")
+            LogUtils.e("请求homePageFlow成功：${it}")
         }
         // 首页主要信息
         val homePageFlow = flow {
             emit(service.getHomePage())
         }.map {
+            LogUtils.json("请求homePageFlow成功：${it}")
             it.data?.blocks ?: emptyList()
         }.catch {
             LogUtils.e("请求homePageFlow失败：${it}")
