@@ -51,8 +51,8 @@ fun ScrollPlayList(
     Column(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
+            .padding(20.sdp)
             .width(300.sdp)
-            .padding(10.sdp)
     ) {
 
         if (list == null) {
@@ -138,7 +138,7 @@ fun ScrollPlayList(
             }
             Text(
                 text = list[pagerState.currentPage].uiElement.mainTitle.title,
-                fontSize = 16.sp,
+                fontSize = 12.sp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp),

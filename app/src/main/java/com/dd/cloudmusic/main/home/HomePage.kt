@@ -68,7 +68,9 @@ fun HomePage(
         )
         Column(
             //导航栏高度150。如果不设置padding会被导航栏挡住
-            Modifier.verticalScroll(state).padding(bottom = 160.sdp)
+            Modifier
+                .verticalScroll(state)
+                .padding(bottom = 160.sdp)
         ) {
             if (banners.isNotEmpty()) {
                 Banner(list = banners) { url, title ->
@@ -81,12 +83,18 @@ fun HomePage(
                         HomeIconPage(homeIcon[index])
                     }
                 }
+                Spacer(
+                    modifier = Modifier
+                        .height(30.sdp)
+                        .fillMaxWidth()
+                )
             }
             //推荐歌单       showType = HOMEPAGE_SLIDE_PLAYLIST
             if (recommendPlay.isNotNull() && recommendPlay!!.showType == "HOMEPAGE_SLIDE_PLAYLIST") {
+                Divider(modifier = Modifier.fillMaxWidth().height(1.sdp).background(AppTheme.colors.divider))
                 Spacer(
                     modifier = Modifier
-                        .height(20.sdp)
+                        .height(30.sdp)
                         .fillMaxWidth()
                 )
                 Box(
@@ -135,6 +143,11 @@ fun HomePage(
                     }
 
                 }
+                Spacer(
+                    modifier = Modifier
+                        .height(20.sdp)
+                        .fillMaxWidth()
+                )
                 LazyRow {
                     items(recommendPlay.creatives.size) { index ->
                         HomeRecommendPlauyPage(recommendPlay.creatives[index])
@@ -143,9 +156,10 @@ fun HomePage(
             }
             //推荐歌曲 showType = HOMEPAGE_SLIDE_SONGLIST_ALIGN
             if (slidePlay.isNotNull() && slidePlay!!.showType == "HOMEPAGE_SLIDE_SONGLIST_ALIGN") {
+                Divider(modifier = Modifier.fillMaxWidth().height(1.sdp).background(AppTheme.colors.divider))
                 Spacer(
                     modifier = Modifier
-                        .height(20.sdp)
+                        .height(30.sdp)
                         .fillMaxWidth()
                 )
                 Box(
@@ -193,12 +207,20 @@ fun HomePage(
                         )
                     }
                 }
+                Spacer(
+                    modifier = Modifier
+                        .height(20.sdp)
+                        .fillMaxWidth()
+                )
                 LazyRow {
                     items(slidePlay.creatives.size) { index ->
                         HomeRecommendSongPage(slidePlay.creatives[index])
                     }
                 }
             }
+
+
+
         }
 
 
@@ -244,8 +266,8 @@ fun HomeRecommendPlauyPage(data: Creative) {
     } else {
         Column(
             modifier = Modifier
+                .padding(20.sdp)
                 .width(300.sdp)
-                .padding(10.sdp)
                 .clickable {
                     showToast("暂未开发")
                 },
@@ -261,7 +283,7 @@ fun HomeRecommendPlauyPage(data: Creative) {
             )
             Text(
                 text = data.uiElement.mainTitle.title,
-                fontSize = 16.sp,
+                fontSize = 12.sp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.sdp),
@@ -280,25 +302,35 @@ fun HomeRecommendPlauyPage(data: Creative) {
 fun HomeRecommendSongPage(creative: Creative) {
     Column(Modifier.width(860.sdp)) {
         for (item in creative.resources) {
-            Row(Modifier.padding(10.sdp)) {
+            Row(Modifier.padding(20.sdp)) {
                 AsyncImage(
                     model = item.uiElement.image.imageUrl,
                     contentDescription = item.uiElement.mainTitle.title,
                     modifier = Modifier
-                        .size(80.sdp)
-                        .clip(shape = RoundedCornerShape(16.dp)),
+                        .size(150.sdp)
+                        .clip(shape = RoundedCornerShape(30.sdp)),
                     contentScale = ContentScale.Crop,
                 )
                 Text(
                     text = item.uiElement.mainTitle.title,
                     fontSize = 16.sp,
                     modifier = Modifier
+                        .padding(start = 20.sdp)
+                        .align(Alignment.CenterVertically),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = TextStyle(color = AppTheme.colors.textPrimary)
+                )
+                Text(
+                    text ="-${item.resourceExtInfo.artists[0].name}" ,
+                    fontSize = 14.sp,
+                    modifier = Modifier
                         .fillMaxWidth()
                         .padding(5.sdp)
                         .align(Alignment.CenterVertically),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    style = TextStyle(color = AppTheme.colors.textPrimary)
+                    style = TextStyle(color = AppTheme.colors.textSecondary)
                 )
             }
         }
