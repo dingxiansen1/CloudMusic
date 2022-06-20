@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 fun <T> ViewModel.observerFlow(data: Flow<T>, action: suspend (value: T) -> Unit) {
     launch {
         data.collect {
-            action
+            action.invoke(it)
         }
     }
 }
