@@ -1,11 +1,14 @@
 package com.dd.base.utils.log
 
 import android.util.Log
+import com.dd.base.utils.log.LogUtils.Type.*
+import com.dd.base.utils.log.LogUtils.enabled
+import com.dd.base.utils.log.LogUtils.logHooks
+import com.dd.base.utils.log.LogUtils.tag
 import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
 import kotlin.math.min
-import com.dd.base.utils.log.LogUtils.Type.*
 
 /**
  * @property tag 默认日志标签
@@ -17,6 +20,11 @@ object LogUtils {
     enum class Type {
         VERBOSE, DEBUG, INFO, WARN, ERROR, WTF
     }
+
+    private const val TOP_CORNER = "┌────────────────────────────────────────────────────────"
+    private const val MIDDLE_CORNER = "├────────────────────────────────────────────────────────"
+    private const val LEFT_BORDER = "│ "
+    private const val BOTTOM_CORNER = "└────────────────────────────────────────────────────────"
 
     /** 日志默认标签 */
     var tag = "日志"
@@ -163,7 +171,9 @@ object LogUtils {
 
         if (traceEnabled && occurred != null) {
             occurred.stackTrace.getOrNull(1)?.run {
-                message += " ($fileName:$lineNumber)"
+                log(type, TOP_CORNER, tag, tr)
+                log(type, " ($fileName:$lineNumber)", tag, tr)
+                log(type, MIDDLE_CORNER, tag, tr)
             }
         }
         val max = 3800
@@ -183,6 +193,7 @@ object LogUtils {
         } else {
             log(type, message, tag, tr)
         }
+        log(type, BOTTOM_CORNER, tag, tr)
     }
 
     /**
@@ -232,12 +243,12 @@ object LogUtils {
 
     private fun log(type: Type, msg: String, tag: String, tr: Throwable?) {
         when (type) {
-            VERBOSE -> Log.v(tag, msg, tr)
-            DEBUG -> Log.d(tag, msg, tr)
-            INFO -> Log.i(tag, msg, tr)
-            WARN -> Log.w(tag, msg, tr)
-            ERROR -> Log.e(tag, msg, tr)
-            WTF -> Log.wtf(tag, msg, tr)
+            VERBOSE -> Log.v(tag, LEFT_BORDER + msg, tr)
+            DEBUG -> Log.d(tag, LEFT_BORDER + msg, tr)
+            INFO -> Log.i(tag, LEFT_BORDER + msg, tr)
+            WARN -> Log.w(tag, LEFT_BORDER + msg, tr)
+            ERROR -> Log.e(tag, LEFT_BORDER + msg, tr)
+            WTF -> Log.wtf(tag, LEFT_BORDER + msg, tr)
         }
     }
     // </editor-fold>

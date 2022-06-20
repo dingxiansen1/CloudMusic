@@ -3,8 +3,8 @@ package com.dd.cloudmusic.main.home
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewModelScope
 import com.dd.base.BaseViewModel
+import com.dd.base.ext.launch
 import com.dd.base.utils.log.LogUtils
 import com.dd.cloudmusic.bean.Banner
 import com.dd.cloudmusic.bean.Block
@@ -12,7 +12,6 @@ import com.dd.cloudmusic.bean.HomeIconBean
 import com.dd.cloudmusic.net.HttpService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -53,7 +52,7 @@ class HomeViewModel @Inject constructor(
         }.catch {
             LogUtils.e("请求homePageFlow失败：${it}")
         }
-        viewModelScope.launch {
+        launch{
             combine(bannerFlow, homeIconFlow, homePageFlow) { banners, icons, bean ->
                 viewStates =
                     viewStates.copy(
