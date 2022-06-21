@@ -3,7 +3,6 @@ package com.dd.cloudmusic.main.home
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -21,7 +20,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.bbgo.common_base.ext.isNotNull
 import com.dd.base.ext.showToast
 import com.dd.base.utils.sdp
 import com.dd.cloudmusic.R
@@ -90,7 +88,7 @@ fun HomePage(
                 )
             }
             //推荐歌单       showType = HOMEPAGE_SLIDE_PLAYLIST
-            if (recommendPlay.isNotNull() && recommendPlay!!.showType == "HOMEPAGE_SLIDE_PLAYLIST") {
+            if (recommendPlay!=null) {
                 Divider(modifier = Modifier.fillMaxWidth().height(1.sdp).background(AppTheme.colors.divider))
                 Spacer(
                     modifier = Modifier
@@ -155,7 +153,7 @@ fun HomePage(
                 }
             }
             //推荐歌曲 showType = HOMEPAGE_SLIDE_SONGLIST_ALIGN
-            if (slidePlay.isNotNull() && slidePlay!!.showType == "HOMEPAGE_SLIDE_SONGLIST_ALIGN") {
+            if (slidePlay!=null) {
                 Divider(modifier = Modifier.fillMaxWidth().height(1.sdp).background(AppTheme.colors.divider))
                 Spacer(
                     modifier = Modifier

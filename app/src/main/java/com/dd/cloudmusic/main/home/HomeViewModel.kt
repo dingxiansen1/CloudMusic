@@ -54,13 +54,25 @@ class HomeViewModel @Inject constructor(
         }
         launch{
             combine(bannerFlow, homeIconFlow, homePageFlow) { banners, icons, bean ->
+                var  recommendPlay:Block?=null
+                var  slidePlay:Block?=null
+                for(item in bean){
+                    when(item.showType){
+                        HOMEPAGE_SLIDE_PLAYLIST ->{
+                            recommendPlay = item
+                        }
+                        HOMEPAGE_SLIDE_SONGLIST_ALIGN ->{
+                            slidePlay = item
+                        }
+                    }
+                }
                 viewStates =
                     viewStates.copy(
                         isRefreshing = false,
                         banner = banners,
                         homeIcon = icons,
-                        recommendPlay = bean[1],
-                        slidePlay = bean[2]
+                        recommendPlay =recommendPlay,
+                        slidePlay =slidePlay
                     )
             }.onStart {
                 viewStates = viewStates.copy(isRefreshing = true)
@@ -71,6 +83,9 @@ class HomeViewModel @Inject constructor(
     }
 
 }
+
+const val HOMEPAGE_SLIDE_PLAYLIST = "HOMEPAGE_SLIDE_PLAYLIST"
+const val HOMEPAGE_SLIDE_SONGLIST_ALIGN = "HOMEPAGE_SLIDE_SONGLIST_ALIGN"
 
 data class HomeViewState(
     val isRefreshing: Boolean = false,

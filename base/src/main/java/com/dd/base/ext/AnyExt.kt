@@ -1,4 +1,4 @@
-package com.bbgo.common_base.ext
+package com.dd.base.ext
 
 fun Any?.isNull() = this == null
 
