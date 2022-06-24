@@ -172,7 +172,7 @@ object LogUtils {
         if (traceEnabled && occurred != null) {
             occurred.stackTrace.getOrNull(1)?.run {
                 log(type, TOP_CORNER, tag, tr)
-                log(type, " ($fileName:$lineNumber)", tag, tr)
+                log(type, "$LEFT_BORDER $className ($fileName:$lineNumber)", tag, tr)
                 log(type, MIDDLE_CORNER, tag, tr)
             }
         }
@@ -185,13 +185,13 @@ object LogUtils {
                 while (startIndex < length) {
                     endIndex = min(length, endIndex)
                     val substring = message.substring(startIndex, endIndex)
-                    log(type, substring, tag, tr)
+                    log(type,LEFT_BORDER + substring, tag, tr)
                     startIndex += max
                     endIndex += max
                 }
             }
         } else {
-            log(type, message, tag, tr)
+            log(type,LEFT_BORDER + message, tag, tr)
         }
         log(type, BOTTOM_CORNER, tag, tr)
     }
@@ -243,12 +243,12 @@ object LogUtils {
 
     private fun log(type: Type, msg: String, tag: String, tr: Throwable?) {
         when (type) {
-            VERBOSE -> Log.v(tag, LEFT_BORDER + msg, tr)
-            DEBUG -> Log.d(tag, LEFT_BORDER + msg, tr)
-            INFO -> Log.i(tag, LEFT_BORDER + msg, tr)
-            WARN -> Log.w(tag, LEFT_BORDER + msg, tr)
-            ERROR -> Log.e(tag, LEFT_BORDER + msg, tr)
-            WTF -> Log.wtf(tag, LEFT_BORDER + msg, tr)
+            VERBOSE -> Log.v(tag,  msg, tr)
+            DEBUG -> Log.d(tag,  msg, tr)
+            INFO -> Log.i(tag,  msg, tr)
+            WARN -> Log.w(tag, msg, tr)
+            ERROR -> Log.e(tag,  msg, tr)
+            WTF -> Log.wtf(tag,  msg, tr)
         }
     }
     // </editor-fold>
