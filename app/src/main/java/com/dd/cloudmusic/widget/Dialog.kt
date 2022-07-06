@@ -18,7 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.dd.base.utils.SpHelper
+import com.dd.base.utils.DataStoreUtils
 import com.dd.cloudmusic.theme.AppTheme
 import com.dd.cloudmusic.theme.THEME_COLOR_KEY
 import com.dd.cloudmusic.theme.themeColors
@@ -89,7 +89,7 @@ fun PaletteSelectorDialog(
                             .wrapContentSize()
                             .background(AppTheme.colors.mainColor, RoundedCornerShape(24.dp))
                             .clickable {
-                                SpHelper.put(THEME_COLOR_KEY, index)
+                                DataStoreUtils.putSyncData(THEME_COLOR_KEY, index)
                                 onSelectItem.invoke(index)
                                 onDismiss.invoke()
                             }

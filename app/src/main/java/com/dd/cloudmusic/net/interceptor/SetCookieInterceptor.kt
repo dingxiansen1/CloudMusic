@@ -1,6 +1,6 @@
 package com.dd.cloudmusic.net.interceptor
 
-import com.dd.base.utils.SpHelper
+import com.dd.base.utils.DataStoreUtils
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -12,7 +12,7 @@ class SetCookieInterceptor: Interceptor {
         val domain = request.url.host
         //获取domain内的cookie
         if (domain.isNotEmpty()) {
-            val cookie: String = SpHelper.getString(domain)
+            val cookie: String = DataStoreUtils.getSyncData(domain,"")
             if (cookie.isNotEmpty()) {
                 builder.addHeader("Cookie", cookie)
             }

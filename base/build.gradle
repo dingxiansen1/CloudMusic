@@ -61,8 +61,9 @@ dependencies {
     //kotlin 协程
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
 
-    //MMKV SP存储
-    api 'com.tencent:mmkv:1.0.23'
+    // datastore数据保存，用于cookie持久化
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation "androidx.datastore:datastore-core:1.0.0"
     //App Startup
     api "androidx.startup:startup-runtime:1.2.0-alpha01"
 

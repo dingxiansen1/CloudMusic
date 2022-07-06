@@ -1,6 +1,6 @@
 package com.dd.cloudmusic.net.interceptor
 
-import com.dd.base.utils.SpHelper
+import com.dd.base.utils.DataStoreUtils
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -19,7 +19,7 @@ class CacheCookieInterceptor: Interceptor {
             val cookies = response.headers(SET_COOKIE_KEY)
             if (cookies.isNotEmpty()) {
                 //cookie可能有多个，都保存下来
-                SpHelper.put(domain, encodeCookie(cookies))
+                DataStoreUtils.putSyncData(domain, encodeCookie(cookies))
             }
         }
         return response
