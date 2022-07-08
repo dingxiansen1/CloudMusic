@@ -11,6 +11,7 @@ import com.dd.base.utils.log.LogUtils
 import com.dd.cloudmusic.net.HttpService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -29,38 +30,44 @@ class HomeViewModel @Inject constructor(
         getNetData()
     }
 
-    // 轮播
-    private val bannerFlow = flow {
-        emit(service.getBanner())
-    }.map {
-        it.banners ?: emptyList()
-    }.catch {
-        LogUtils.e("请求homebannerFlow失败：${it}")
-    }
 
-    // 首页Icon
-    private val homeIconFlow = flow {
-        emit(service.getHomeIcon())
-    }.map {
-        it.data ?: emptyList()
-    }.catch {
-        LogUtils.e("请求homeIconFlow失败：${it}")
-    }
-
-    // 首页主要信息
-    private val homePageFlow = flow {
-        emit(service.getHomePage())
-    }.map {
-        it.data?.blocks ?: emptyList()
-    }.catch {
-        LogUtils.e("请求homePageFlow失败：${it}")
-    }
-
-    private fun getLocalData() :HomeViewState {
-       return DataStoreUtils.getSyncData(NET_DATA, HomeViewState(isRefreshing = true))
+    private fun getLocalData(): HomeViewState {
+        DataStoreUtils.readStringData(NET_DATA).let {
+            if (it != "") {
+                return Json.decodeFromString(it)
+            }
+            return HomeViewState(isRefreshing = true)
+        }
     }
 
     private fun getNetData() {
+        // 轮播
+        val bannerFlow = flow {
+            emit(service.getBanner())
+        }.map {
+            it.banners ?: emptyList()
+        }.catch {
+            LogUtils.e("请求homebannerFlow失败：${it}")
+        }
+
+        // 首页Icon
+        val homeIconFlow = flow {
+            emit(service.getHomeIcon())
+        }.map {
+            it.data ?: emptyList()
+        }.catch {
+            LogUtils.e("请求homeIconFlow失败：${it}")
+        }
+
+        // 首页主要信息
+        val homePageFlow = flow {
+            emit(service.getHomePage())
+        }.map {
+            it.data?.blocks ?: emptyList()
+        }.catch {
+            LogUtils.e("请求homePageFlow失败：${it}")
+        }
+
         launch {
             combine(bannerFlow, homeIconFlow, homePageFlow) { banners, icons, bean ->
                 var recommendPlay: Block? = null
@@ -82,7 +89,7 @@ class HomeViewModel @Inject constructor(
                     recommendPlay = recommendPlay,
                     slidePlay = slidePlay
                 )
-                if (viewStates .isRefreshing){
+                if (viewStates.isRefreshing){
                     viewStates = data
                 }
                 saveNetData(data)
@@ -92,7 +99,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun saveNetData(viewStates :HomeViewState){
+    suspend fun saveNetData(viewStates :HomeViewState){
         val jsonString = Json.encodeToString(viewStates)
         DataStoreUtils.putData(jsonString, NET_DATA)
     }

@@ -24,7 +24,6 @@ data class Block(
     val canFeedback: Boolean,
     val creatives: List<Creative>,
     val dislikeShowType: Int,
-    val extInfo: ExtInfo,
     val resourceIdList: List<String>,
     val showType: String,
     val uiElement: UiElementXX
@@ -59,10 +58,6 @@ data class Creative(
     val position: Int,
     val resources: List<Resource>,
     val uiElement: UiElementX
-)
-@Serializable
-data class ExtInfo(
-    val banners: List<Banner>
 )
 @Serializable
 data class UiElementXX(
@@ -150,44 +145,6 @@ data class ImageX(
 @Serializable
 data class MainTitleX(
     val title: String
-)
-@Serializable
-data class Banner(
-    val adDispatchJson: String,
-    val adLocation: String,
-    val adSource: String,
-    val adid: String,
-    val adurlV2: String,
-    val alg: String,
-    val bannerId: String,
-    val dynamicVideoData: String,
-    val encodeId: String,
-    val event: String,
-    val exclusive: Boolean,
-    val extMonitor: String,
-    val extMonitorInfo: String,
-    val logContext: String,
-    val monitorBlackList: String,
-    val monitorClick: String,
-    val monitorClickList: String,
-    val monitorImpress: String,
-    val monitorImpressList: String,
-    val monitorType: String,
-    val pic: String,
-    val pid: String,
-    val program: String,
-    val requestId: String,
-    val s_ctrp: String,
-    val scm: String,
-    val showAdTag: Boolean,
-    val showContext: String,
-    val song: String,
-    val targetId: Long,
-    val targetType: Int,
-    val titleColor: String,
-    val typeTitle: String,
-    val url: String,
-    val video: String
 )
 @Serializable
 data class Button(

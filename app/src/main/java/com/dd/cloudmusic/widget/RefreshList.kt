@@ -1,4 +1,4 @@
-package com.dd.base.widgets
+package com.dd.cloudmusic.widget
 
 import android.R
 import androidx.compose.foundation.Image
