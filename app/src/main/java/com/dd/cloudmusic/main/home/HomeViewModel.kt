@@ -1,17 +1,18 @@
 package com.dd.cloudmusic.main.home
 
+import Block
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.dd.base.BaseViewModel
 import com.dd.base.ext.launch
+import com.dd.base.utils.DataStoreUtils
 import com.dd.base.utils.log.LogUtils
-import com.dd.cloudmusic.bean.Banner
-import com.dd.cloudmusic.bean.Block
-import com.dd.cloudmusic.bean.HomeIconBean
 import com.dd.cloudmusic.net.HttpService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 
@@ -24,73 +25,76 @@ class HomeViewModel @Inject constructor(
         private set
 
     init {
-        getData()
+        viewStates = getLocalData()
+        getNetData()
     }
 
-    private fun getData() {
-        // 轮播
-        val bannerFlow = flow {
-            emit(service.getBanner())
-        }.map {
-            it.banners ?: emptyList()
-        }.catch {
-            LogUtils.e("请求homebannerFlow失败：${it}")
-        }
-        // 首页Icon
-        val homeIconFlow = flow {
-            emit(service.getHomeIcon())
-        }.map {
-            it.data ?: emptyList()
-        }.catch {
-            LogUtils.e("请求homeIconFlow失败：${it}")
-        }
-        // 首页主要信息
-        val homePageFlow = flow {
-            emit(service.getHomePage())
-        }.map {
-            it.data?.blocks ?: emptyList()
-        }.catch {
-            LogUtils.e("请求homePageFlow失败：${it}")
-        }
-        launch{
+    // 轮播
+    private val bannerFlow = flow {
+        emit(service.getBanner())
+    }.map {
+        it.banners ?: emptyList()
+    }.catch {
+        LogUtils.e("请求homebannerFlow失败：${it}")
+    }
+
+    // 首页Icon
+    private val homeIconFlow = flow {
+        emit(service.getHomeIcon())
+    }.map {
+        it.data ?: emptyList()
+    }.catch {
+        LogUtils.e("请求homeIconFlow失败：${it}")
+    }
+
+    // 首页主要信息
+    private val homePageFlow = flow {
+        emit(service.getHomePage())
+    }.map {
+        it.data?.blocks ?: emptyList()
+    }.catch {
+        LogUtils.e("请求homePageFlow失败：${it}")
+    }
+
+    private fun getLocalData() :HomeViewState {
+       return DataStoreUtils.getSyncData(NET_DATA, HomeViewState(isRefreshing = true))
+    }
+
+    private fun getNetData() {
+        launch {
             combine(bannerFlow, homeIconFlow, homePageFlow) { banners, icons, bean ->
-                var  recommendPlay:Block?=null
-                var  slidePlay:Block?=null
-                for(item in bean){
-                    when(item.showType){
-                        HOMEPAGE_SLIDE_PLAYLIST ->{
+                var recommendPlay: Block? = null
+                var slidePlay: Block? = null
+                for (item in bean) {
+                    when (item.showType) {
+                        HOMEPAGE_SLIDE_PLAYLIST -> {
                             recommendPlay = item
                         }
-                        HOMEPAGE_SLIDE_SONGLIST_ALIGN ->{
+                        HOMEPAGE_SLIDE_SONGLIST_ALIGN -> {
                             slidePlay = item
                         }
                     }
                 }
-                viewStates =
-                    viewStates.copy(
-                        isRefreshing = false,
-                        banner = banners,
-                        homeIcon = icons,
-                        recommendPlay =recommendPlay,
-                        slidePlay =slidePlay
-                    )
-            }.onStart {
-                viewStates = viewStates.copy(isRefreshing = true)
+                val data =  HomeViewState(
+                    isRefreshing = false,
+                    banner = banners,
+                    homeIcon = icons,
+                    recommendPlay = recommendPlay,
+                    slidePlay = slidePlay
+                )
+                if (viewStates .isRefreshing){
+                    viewStates = data
+                }
+                saveNetData(data)
             }.catch {
                 viewStates = viewStates.copy(isRefreshing = false)
             }.collect()
         }
     }
 
+    private suspend fun saveNetData(viewStates :HomeViewState){
+        val jsonString = Json.encodeToString(viewStates)
+        DataStoreUtils.putData(jsonString, NET_DATA)
+    }
+
 }
-
-const val HOMEPAGE_SLIDE_PLAYLIST = "HOMEPAGE_SLIDE_PLAYLIST"
-const val HOMEPAGE_SLIDE_SONGLIST_ALIGN = "HOMEPAGE_SLIDE_SONGLIST_ALIGN"
-
-data class HomeViewState(
-    val isRefreshing: Boolean = false,
-    val banner: List<Banner> = emptyList(),
-    val homeIcon: List<HomeIconBean> = emptyList(),
-    val recommendPlay: Block? = null,
-    val slidePlay: Block? = null
-)

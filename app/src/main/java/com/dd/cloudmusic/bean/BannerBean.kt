@@ -1,34 +1,36 @@
 package com.dd.cloudmusic.bean
 
+import kotlinx.serialization.Serializable
+
 data class basebanner<T>(
     val banners: List<Banner>?,
     val code: Int
 )
-
+@Serializable
 data class Banner(
-    val adDispatchJson: Any?,
-    val adLocation: Any?,
-    val adSource: Any?,
-    val adid: Any?,
+    val adDispatchJson: String?,
+    val adLocation: String?,
+    val adSource: String?,
+    val adid: String?,
     val encodeId: String?,
-    val event: Any?,
+    val event: String?,
     val exclusive: Boolean?,
-    val extMonitor: Any?,
-    val extMonitorInfo: Any?,
+    val extMonitor: String?,
+    val extMonitorInfo: String?,
     val imageUrl: String,
-    val monitorBlackList: Any?,
-    val monitorClick: Any?,
-    val monitorClickList: Any?,
-    val monitorImpress: Any?,
-    val monitorImpressList: Any?,
-    val monitorType: Any?,
-    val program: Any?,
+    val monitorBlackList: String?,
+    val monitorClick: String?,
+    val monitorClickList: String?,
+    val monitorImpress: String?,
+    val monitorImpressList: String?,
+    val monitorType: String?,
+    val program: String?,
     val scm: String?,
-    val song: Any?,
+    val song: String?,
     val targetId: Long,
     val targetType: Int,
     val titleColor: String?,
     val typeTitle: String,
-    val url: Any?,
-    val video: Any?
+    val url: String?,
+    val video: String?
 )

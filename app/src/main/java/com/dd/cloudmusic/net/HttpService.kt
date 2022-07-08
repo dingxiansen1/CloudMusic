@@ -1,9 +1,9 @@
 package com.dd.cloudmusic.net
 
+import HomePageBean
 import com.dd.base.paging.BasicBean
 import com.dd.cloudmusic.bean.Banner
 import com.dd.cloudmusic.bean.HomeIconBean
-import com.dd.cloudmusic.bean.HomePageBean
 import com.dd.cloudmusic.bean.basebanner
 import retrofit2.http.GET
 
