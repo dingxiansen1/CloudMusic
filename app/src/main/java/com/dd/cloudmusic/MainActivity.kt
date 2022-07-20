@@ -7,9 +7,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.dd.base.utils.WindowUtils
 import com.dd.cloudmusic.navigator.NavController
 import com.dd.cloudmusic.splash.SplashPage
+import com.dd.cloudmusic.splash.SplashViewModel
 import com.dd.cloudmusic.theme.ComposeAppTheme
 import com.dd.cloudmusic.theme.Themem
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -23,6 +25,8 @@ class MainActivity : ComponentActivity() {
         //初始化window工具类
         WindowUtils.Init(this)
         setContent {
+            val splashViewModel : SplashViewModel = hiltViewModel()
+            splashViewModel.getData()
             ComposeAppTheme(themeType = Themem.themeTypeState.value) {
                 //是否闪屏页
                 var isSplash by remember { mutableStateOf(true) }

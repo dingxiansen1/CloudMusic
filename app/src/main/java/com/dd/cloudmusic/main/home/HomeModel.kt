@@ -11,8 +11,6 @@ const val NET_DATA ="net_data"
 const val HOMEPAGE_SLIDE_PLAYLIST = "HOMEPAGE_SLIDE_PLAYLIST"
 const val HOMEPAGE_SLIDE_SONGLIST_ALIGN = "HOMEPAGE_SLIDE_SONGLIST_ALIGN"
 
-
-@Serializable
 data class HomeViewState(
     val isRefreshing: Boolean = false,
     val banner: List<Banner> = emptyList(),

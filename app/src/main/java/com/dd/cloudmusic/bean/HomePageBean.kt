@@ -2,17 +2,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HomePageBean(
-    val blockCodeOrderList: String = "",
-    val blockUUIDs:  String = "",
     val blocks: List<Block>,
-    val cursor: String = "",
-    val demote: Boolean ,
-    val exposedResource: String= "",
-    val guideToast: GuideToast,
-    val hasMore: Boolean,
-    val internalTest:  String = "",
-    val pageConfig: PageConfig,
-    val titles: List<String>
 )
 @Serializable
 data class Block(
@@ -27,25 +17,6 @@ data class Block(
     val resourceIdList: List<String>,
     val showType: String,
     val uiElement: UiElementXX
-)
-@Serializable
-data class GuideToast(
-    val hasGuideToast: Boolean,
-    val toastList: List<String>
-)
-@Serializable
-data class PageConfig(
-    val abtest: List<String>,
-    val fullscreen: Boolean,
-    val homepageMode: String,
-    val nodataToast: String,
-    val orderInfo: String,
-    val refreshInterval: Int,
-    val refreshToast: String,
-    val showModeEntry: Boolean,
-    val songLabelMarkLimit: Int,
-    val songLabelMarkPriority: List<String>,
-    val title: String
 )
 @Serializable
 data class Creative(
@@ -89,7 +60,6 @@ data class UiElementX(
 @Serializable
 data class ResourceExtInfo(
     val artists: List<Artist>,
-    val commentSimpleData: CommentSimpleData,
     val highQuality: Boolean,
     val playCount: Int,
     val specialType: Int
@@ -116,14 +86,6 @@ data class Artist(
     val picUrl: String,
     val topicPerson: Int,
     val trans: String
-)
-@Serializable
-data class CommentSimpleData(
-    val commentId: Long,
-    val content: String,
-    val threadId: String,
-    val userId: Int,
-    val userName: String
 )
 @Serializable
 data class Image(

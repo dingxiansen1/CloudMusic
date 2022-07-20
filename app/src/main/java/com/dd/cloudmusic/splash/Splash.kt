@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.dd.cloudmusic.theme.ComposeAppTheme
 import com.dd.cloudmusic.theme.Themem
@@ -19,6 +20,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashPage(onNextPage: () -> Unit) {
+
     ComposeAppTheme(themeType = Themem.themeTypeState.value) {
         var time by remember { mutableStateOf(3) }
         LaunchedEffect(Unit) {
@@ -43,7 +45,9 @@ fun SplashPage(onNextPage: () -> Unit) {
                 contentDescription = "启动页"
             )
             ExtendedFloatingActionButton(
-                modifier = Modifier.padding(20.dp).align(Alignment.TopEnd),
+                modifier = Modifier
+                    .padding(20.dp)
+                    .align(Alignment.TopEnd),
                 backgroundColor = grey1,
                 onClick = {
                     onNextPage.invoke()

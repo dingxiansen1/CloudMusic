@@ -5,6 +5,12 @@ import com.dd.base.utils.log.LogUtils.Type.*
 import com.dd.base.utils.log.LogUtils.enabled
 import com.dd.base.utils.log.LogUtils.logHooks
 import com.dd.base.utils.log.LogUtils.tag
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
@@ -152,6 +158,7 @@ object LogUtils {
      * @param tag 日志标签
      * @param occurred 日志异常
      */
+    @OptIn(DelicateCoroutinesApi::class)
     private fun print(
         type: Type = INFO,
         msg: Any? = null,
@@ -159,41 +166,43 @@ object LogUtils {
         tr: Throwable? = null,
         occurred: Throwable? = Exception()
     ) {
-        if (!enabled || msg == null) return
-
-        var message = msg.toString()
-
-        val info = LogInfo(type, message, tag, tr, occurred)
-        for (logHook in logHooks) {
-            logHook.hook(info)
-            if (info.msg == null) return
-        }
-
-        if (traceEnabled && occurred != null) {
-            occurred.stackTrace.getOrNull(1)?.run {
-                log(type, TOP_CORNER, tag, tr)
-                log(type, "$LEFT_BORDER $className ($fileName:$lineNumber)", tag, tr)
-                log(type, MIDDLE_CORNER, tag, tr)
-            }
-        }
-        val max = 3800
-        val length = message.length
-        if (length > max) {
-            synchronized(this) {
-                var startIndex = 0
-                var endIndex = max
-                while (startIndex < length) {
-                    endIndex = min(length, endIndex)
-                    val substring = message.substring(startIndex, endIndex)
-                    log(type,LEFT_BORDER + substring, tag, tr)
-                    startIndex += max
-                    endIndex += max
+        GlobalScope.launch(Dispatchers.IO) {
+            Mutex().withLock {
+                if (!enabled || msg == null) return@launch
+                var message = msg.toString()
+                val info = LogInfo(type, message, tag, tr, occurred)
+                for (logHook in logHooks) {
+                    logHook.hook(info)
+                    if (info.msg == null) return@launch
                 }
+
+                if (traceEnabled && occurred != null) {
+                    occurred.stackTrace.getOrNull(1)?.run {
+                        log(type, TOP_CORNER, tag, tr)
+                        log(type, "$LEFT_BORDER $className ($fileName:$lineNumber)", tag, tr)
+                        log(type, MIDDLE_CORNER, tag, tr)
+                    }
+                }
+                val max = 3800
+                val length = message.length
+                if (length > max) {
+                    synchronized(this) {
+                        var startIndex = 0
+                        var endIndex = max
+                        while (startIndex < length) {
+                            endIndex = min(length, endIndex)
+                            val substring = message.substring(startIndex, endIndex)
+                            log(type, LEFT_BORDER + substring, tag, tr)
+                            startIndex += max
+                            endIndex += max
+                        }
+                    }
+                } else {
+                    log(type, LEFT_BORDER + message, tag, tr)
+                }
+                log(type, BOTTOM_CORNER, tag, tr)
             }
-        } else {
-            log(type,LEFT_BORDER + message, tag, tr)
         }
-        log(type, BOTTOM_CORNER, tag, tr)
     }
 
     /**
